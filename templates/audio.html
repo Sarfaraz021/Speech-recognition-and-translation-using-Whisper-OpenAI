@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Collapsible sidebar using Bootstrap 4</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+    integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css') }}">
+  <!-- Scrollbar Custom CSS -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+    integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+    integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <div class="header-container-wrapper">
+    <div class="header-container">
+      <div class="custom-header-bg">
+
+        <div class="page-center">
+          <nav class="navbar navbar-expand-sm navbar-dark">
+            <!-- Brand/logo -->
+            <a class="navbar-brand" href="#">
+              <img src="/static/images/xflow.PNG" />
+            </a>
+
+            <!-- Links -->
+            <ul class="navbar-nav navbar-right">
+              <li class="nav-item">
+                <a class="nav-link active" href="/">Speech Analysis</a>
+              </li>
+             
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body-container-wrapper">
+    <div class="body-container">
+      <div class="page-center">
+
+        <div class="body-text">
+          <style>
+            p {
+              line-height: 1.5em;
+            }
+          </style>
+
+          <!-- <i class="fa fa-cloud" aria-hidden="true"></i> -->
+          <h2>Speech Analysis</h2>
+          <!-- <form class="chatForm" action="/upload" method="POST" enctype="multipart/form-data"> -->
+          <div class="text-center">
+       
+            <form action="/upload_audiofile" method="POST" enctype="multipart/form-data" onsubmit="return validateform() && showLoader()">
+              <div class="form-group">
+                <label class="customlabel">File uploads are currently limited to 25 MB and the following input file types are supported:<br>
+                  mp3, mp4, mpeg, mpga, m4a, wav, and webm. </label>
+                <br>
+                <div style="display: flex; justify-content: center; gap: 20px;">
+                  <label class="customlabel"  style="white-space: nowrap;" for="file">Select file:</label>
+                  <input style="width: fit-content;" type="file" class="form-control-file" id="file" name="file">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+            <br>
+            <div id="loader" class="loader"></div>
+          </div>
+          
+          <!-- <button type="submit" class="upload" id="call-to-action">Submit</button> -->
+          <!-- </form> -->
+          <br><br>
+          <div class="d-flex col-12">
+            <div class="labelStyles">
+              <h2 style="text-align: center;">Transcription and Analysis</h2>
+              <label class="labelStyle">
+                {% if text %}
+                {% for paragraph in text.split('\n') %}
+                <p>{{ paragraph }}</p>
+                {% endfor %}
+                {% endif %}
+              </label>
+            </div>
+            <!-- <p>{{text}}</p> -->
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-container-wrapper">
+      <div class="footer-container">
+        <div class="custom-footer-bg">
+          <div class="page-center">
+            <p>@Copyright Xflow Research</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+<script>
+  function showLoader() {
+    
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("resultLabel").style.display = "none";
+  return true;
+}
+
+function validateform(){
+var inputfile = document.getElementById('file');
+if (inputfile.files.length ===0){
+  alert('Please select a file');
+  return false;
+}
+return true;
+}
+</script>
+</html>
